@@ -7,11 +7,8 @@
 set images_url http://192.168.1.250
 menu My ISOs
 item --gap Microsoft Windows 10 Preinstallation Environment
-item WinPE_amd64 ${space} Load WinPE_amd64
-item WinPE_x86 ${space} Load WinPE_x86
-item --gap Microsoft Windows 10
-item Win10_20H2_v2_EnglishInternational_x64 ${space} Install Win10_20H2_v2_EnglishInternational_x64
-item Win10_20H2_v2_EnglishInternational_x32 ${space} Install Win10_20H2_v2_EnglishInternational_x32
+item WinPE_amd64 ${space} Install Win10_20H2_v2_EnglishInternational_x64
+item WinPE_x86 ${space} Install Win10_20H2_v2_EnglishInternational_x32
 choose custom_choice || goto custom_exit
 echo ${cls}
 goto ${custom_choice}
@@ -20,49 +17,29 @@ goto custom_exit
 :WinPE_amd64
 imgfree
 kernel http://${boot_domain}/wimboot
-initrd -n bootmgr     ${images_url}/Windows/WinPE_amd64/bootmgr       bootmgr ||
-initrd -n bootmgr.efi ${images_url}/Windows/WinPE_amd64/bootmgr.efi   bootmgr.efi ||      
-initrd -n bcd         ${images_url}/Windows/WinPE_amd64/boot/bcd      bcd ||
-initrd -n bcd         ${images_url}/Windows/WinPE_amd64/Boot/BCD      bcd ||
-initrd -n boot.sdi    ${images_url}/Windows/WinPE_amd64/boot/boot.sdi boot.sdi ||
-initrd -n boot.sdi    ${images_url}/Windows/WinPE_amd64/Boot/boot.sdi boot.sdi ||
-initrd -n boot.wim    ${images_url}/Windows/WinPE_amd64/sources/boot.wim boot.wim
+initrd -n install.bat  ${images_url}/Windows/install.bat                  install.bat ||
+initrd -n winpeshl.ini ${images_url}/Windows/winpeshl.ini                 winpeshl.ini ||
+initrd -n bootmgr      ${images_url}/Windows/WinPE_amd64/bootmgr          bootmgr ||
+initrd -n bootmgr.efi  ${images_url}/Windows/WinPE_amd64/bootmgr.efi      bootmgr.efi ||      
+initrd -n bcd          ${images_url}/Windows/WinPE_amd64/boot/bcd         bcd ||
+initrd -n bcd          ${images_url}/Windows/WinPE_amd64/Boot/BCD         bcd ||
+initrd -n boot.sdi     ${images_url}/Windows/WinPE_amd64/boot/boot.sdi    boot.sdi ||
+initrd -n boot.sdi     ${images_url}/Windows/WinPE_amd64/Boot/boot.sdi    boot.sdi ||
+initrd -n boot.wim     ${images_url}/Windows/WinPE_amd64/sources/boot.wim boot.wim
 boot || goto custom_exit
 
 :WinPE_x86
 imgfree
 kernel http://${boot_domain}/wimboot
-initrd -n bootmgr     ${images_url}/Windows/WinPE_x86/bootmgr       bootmgr ||
-initrd -n bootmgr.efi ${images_url}/Windows/WinPE_x86/bootmgr.efi   bootmgr.efi ||      
-initrd -n bcd         ${images_url}/Windows/WinPE_x86/boot/bcd      bcd ||
-initrd -n bcd         ${images_url}/Windows/WinPE_x86/Boot/BCD      bcd ||
-initrd -n boot.sdi    ${images_url}/Windows/WinPE_x86/boot/boot.sdi boot.sdi ||
-initrd -n boot.sdi    ${images_url}/Windows/WinPE_x86/Boot/boot.sdi boot.sdi ||
-initrd -n boot.wim    ${images_url}/Windows/WinPE_x86/sources/boot.wim boot.wim
-boot || goto custom_exit
-
-:Win10_20H2_v2_EnglishInternational_x64
-imgfree
-kernel http://${boot_domain}/wimboot
-initrd -n bootmgr     ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x64/bootmgr       bootmgr ||
-initrd -n bootmgr.efi ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x64/bootmgr.efi   bootmgr.efi ||      
-initrd -n bcd         ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x64/boot/bcd      bcd ||
-initrd -n bcd         ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x64/Boot/BCD      bcd ||
-initrd -n boot.sdi    ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x64/boot/boot.sdi boot.sdi ||
-initrd -n boot.sdi    ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x64/Boot/boot.sdi boot.sdi ||
-initrd -n boot.wim    ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x64/sources/boot.wim boot.wim
-boot || goto custom_exit
-
-:Win10_20H2_v2_EnglishInternational_x32
-imgfree
-kernel http://${boot_domain}/wimboot
-initrd -n bootmgr     ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x32/bootmgr       bootmgr ||
-initrd -n bootmgr.efi ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x32/bootmgr.efi   bootmgr.efi ||      
-initrd -n bcd         ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x32/boot/bcd      bcd ||
-initrd -n bcd         ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x32/Boot/BCD      bcd ||
-initrd -n boot.sdi    ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x32/boot/boot.sdi boot.sdi ||
-initrd -n boot.sdi    ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x32/Boot/boot.sdi boot.sdi ||
-initrd -n boot.wim    ${images_url}/Windows/Win10_20H2_v2_EnglishInternational_x32/sources/boot.wim boot.wim
+initrd -n install.bat  ${images_url}/Windows/install.bat                  install.bat ||
+initrd -n winpeshl.ini ${images_url}/Windows/winpeshl.ini                 winpeshl.ini ||
+initrd -n bootmgr      ${images_url}/Windows/WinPE_x86/bootmgr            bootmgr ||
+initrd -n bootmgr.efi  ${images_url}/Windows/WinPE_x86/bootmgr.efi        bootmgr.efi ||      
+initrd -n bcd          ${images_url}/Windows/WinPE_x86/boot/bcd           bcd ||
+initrd -n bcd          ${images_url}/Windows/WinPE_x86/Boot/BCD           bcd ||
+initrd -n boot.sdi     ${images_url}/Windows/WinPE_x86/boot/boot.sdi      boot.sdi ||
+initrd -n boot.sdi     ${images_url}/Windows/WinPE_x86/Boot/boot.sdi      boot.sdi ||
+initrd -n boot.wim     ${images_url}/Windows/WinPE_x86/sources/boot.wim   boot.wim
 boot || goto custom_exit
 
 :custom_exit
