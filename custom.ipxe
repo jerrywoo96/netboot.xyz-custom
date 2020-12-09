@@ -1,12 +1,42 @@
 #!ipxe
 ###
-### netboot.xyz-custom menu
+### My Custom Menu
 ###
 
-:start
-echo Hello world!
-sleep 10
+:custom
+set windows_iso_url http://192.168.1.250/Windows
+menu My ISOs
+item --gap Microsoft Windows 10
+item Win10_20H2_v2_EnglishInternational_x64 ${space} Install Win10_20H2_v2_EnglishInternational_x64
+item Win10_20H2_v2_EnglishInternational_x32 ${space} Install Win10_20H2_v2_EnglishInternational_x32
+choose custom_choice || goto custom_exit
+echo ${cls}
+goto ${custom_choice}
 goto custom_exit
 
+:Win10_20H2_v2_EnglishInternational_x64
+imgfree
+kernel http://${boot_domain}/wimboot
+initrd -n bootmgr     ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x64/bootmgr       bootmgr ||
+initrd -n bootmgr.efi ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x64/bootmgr.efi   bootmgr.efi ||      
+initrd -n bcd         ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x64/boot/bcd      bcd ||
+initrd -n bcd         ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x64/Boot/BCD      bcd ||
+initrd -n boot.sdi    ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x64/boot/boot.sdi boot.sdi ||
+initrd -n boot.sdi    ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x64/Boot/boot.sdi boot.sdi ||
+initrd -n boot.wim    ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x64/sources/boot.wim boot.wim
+boot || goto custom_exit
+
+:Win10_20H2_v2_EnglishInternational_x32
+imgfree
+kernel http://${boot_domain}/wimboot
+initrd -n bootmgr     ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x32/bootmgr       bootmgr ||
+initrd -n bootmgr.efi ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x32/bootmgr.efi   bootmgr.efi ||      
+initrd -n bcd         ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x32/boot/bcd      bcd ||
+initrd -n bcd         ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x32/Boot/BCD      bcd ||
+initrd -n boot.sdi    ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x32/boot/boot.sdi boot.sdi ||
+initrd -n boot.sdi    ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x32/Boot/boot.sdi boot.sdi ||
+initrd -n boot.wim    ${windows_iso_url}/Win10_20H2_v2_EnglishInternational_x32/sources/boot.wim boot.wim
+boot || goto custom_exit
+
 :custom_exit
-exit 0
+exit
